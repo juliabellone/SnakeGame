@@ -21,6 +21,15 @@ Game.prototype._drawBoard = function () {
     }
   }
 };
+
+Game.prototype._drawSnake = function () {
+  this.snake.body.forEach(function(position, index){
+    this.ctx.fillStyle = "green";
+    this.ctx.fillRect(position.column * 10,  position.row, 8, 8);
+  }.bind(this)); // es darle un nuevo contexto a la funcion del callback. Es como usar el that, pero mas elegante
+};
+
 Game.prototype.start = function() {
   this._drawBoard();
+  this._drawSnake();
 };
