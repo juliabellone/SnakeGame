@@ -20,6 +20,9 @@ Game.prototype._drawBoard = function () {
       this.ctx.fillRect(columnIndex * 10, rowIndex * 10, 10, 10);
     }
   }
+  if(this.food) {
+    this._drawfood();
+  }
 };
 
 Game.prototype._drawSnake = function () {
@@ -33,14 +36,10 @@ Game.prototype.start = function() {
   // this._drawBoard();
   // this._drawSnake();
   this.snake.move();
-  window.requestAnimationFrame(this._update.bind(this));
-};
-
-Game.prototype._update = function () {
-  this._drawBoard();
-  this._drawSnake();
-  window.requestAnimationFrame(this._update.bind(this));
   this._assignControlKeys();
+  this.generateFood();
+  // this.intervalGame =
+  window.requestAnimationFrame(this._update.bind(this));
 };
 
 Game.prototype._assignControlKeys = function () {
@@ -58,3 +57,38 @@ Game.prototype._assignControlKeys = function () {
     }
   }.bind(this);
 };
+
+Game.prototype.generateFood = function () {
+  do {
+    this.food = {
+      row: Math.floor(Math.random()*this.rows),
+      column: Math.floor(Math.random()*this.columns),
+    };
+  } while (this.snake.collidesWith(this.food));
+};
+Game.prototype._drawfood = function () {
+  this.ctx.fillStyle = "red";
+  this.ctx.fillRect(this.food.column*10, this.food.row*10,8,8);
+};
+Game.prototype._update = function () {
+  this._drawBoard();
+  this._drawSnake();
+  if (this.snake.hasEatenFood(this.food)) {
+    this.snake.grow();
+    this.generateFood();
+    this._drawfood();
+  }
+  // if (this.snake.hasEatenItself) {
+  //   this.snake.stop();
+  //   this.stop();
+  //   alert('gameover');
+  // }
+  // this.intervalGame = window.requestAnimationFrame(this._update.bind(this));
+};
+
+// Game.prototype.stop = function () {
+//   if (this.intervalGame){
+//     clearInterval(this.intervalGame);
+//     this.intervalGame = undefined;
+//   }
+// };

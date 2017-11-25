@@ -8,8 +8,8 @@ function Snake (maxRows, maxColumns) {
     {row:1, column:1},
   ];
   this.intervalId = undefined;
-  this.maxColumns = maxRows;
-  this.maxRows = maxColumns;
+  this.maxColumns = maxColumns;
+  this.maxRows = maxRows;
 }
 Snake.prototype.move = function (){
   if(!this.intervalId){
@@ -67,3 +67,30 @@ Snake.prototype.moveForward = function () {
   // });
   this.previousTail = this.body.pop();
 };
+
+Snake.prototype.grow = function () {
+  if(this.previousTail) {
+    this.body.push(this.previousTail);
+    this.previousTail = undefined;
+  }
+};
+Snake.prototype.hasEatenFood = function (food) {
+  return this.body[0].row === food.row && this.body[0].column === food.column;
+};
+
+Snake.prototype.collidesWith = function (position) {
+  return this.body.some(function(bodyPiece) {
+    return bodyPiece.row === position.row && bodyPiece.column === position.column;
+  });
+};
+
+// Snake.prototype.hasEatenItself = function () {
+//   return this.body.some(function(element, index, array){
+//     return (element.row === array[0].row && element.column === array[0].column && index !=0);
+//   });
+// };
+// Snake.prototype.stop = function () {
+//   if (this.intervalId){
+//     clearInterval(this.intervalId);
+//   }
+// };
