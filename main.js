@@ -1,9 +1,17 @@
-console.log("hola");// var myGameArea = {
-//     canvas : document.createElement("canvas"),
-//     start : function() {
-//         this.canvas.width = 480;
-//         this.canvas.height = 270;
-//         this.context = this.canvas.getContext("2d");
-//         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-//     }
-// }
+//inicializamos lo que pasa cuando se carga la pantalla. Dentro del document ready hay un callback
+$(document).ready(function(){
+var game;
+var canvas = document.getElementById("snake");
+var ctx = canvas.getContext("2d");
+
+//como parametro le pasamos directamente un objeto
+game = new Game({
+  rows: canvas.width / 10,
+  columns: canvas.height / 10,
+  color: '#E3D4AB',
+  snake: undefined,
+  ctx: ctx,
+});
+
+game.start();
+});
