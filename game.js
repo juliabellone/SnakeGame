@@ -25,11 +25,36 @@ Game.prototype._drawBoard = function () {
 Game.prototype._drawSnake = function () {
   this.snake.body.forEach(function(position, index){
     this.ctx.fillStyle = "green";
-    this.ctx.fillRect(position.column * 10,  position.row, 8, 8);
+    this.ctx.fillRect(position.column * 10,  position.row * 10, 8, 8);
   }.bind(this)); // es darle un nuevo contexto a la funcion del callback. Es como usar el that, pero mas elegante
 };
 
 Game.prototype.start = function() {
+  // this._drawBoard();
+  // this._drawSnake();
+  this.snake.move();
+  window.requestAnimationFrame(this._update.bind(this));
+};
+
+Game.prototype._update = function () {
   this._drawBoard();
   this._drawSnake();
+  window.requestAnimationFrame(this._update.bind(this));
+  this._assignControlKeys();
+};
+
+Game.prototype._assignControlKeys = function () {
+  document.onkeydown = function (e) {
+    switch (e.keyCode) {
+      // es mejor crear metodos que cambiar directamente las propiedades del objeto snake,en este caso porque tenemos q crear la logica de los cambios de direccion restringidos.
+      case 38: this.snake.goUp(); //arrow up
+        break;
+      case 40: this.snake.goDown();//arrow down
+        break;
+      case 37: this.snake.goLeft();// arrow left
+        break;
+      case 39: this.snake.goRight();//arrow right
+        break;
+    }
+  }.bind(this);
 };

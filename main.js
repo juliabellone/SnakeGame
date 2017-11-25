@@ -9,7 +9,7 @@ game = new Game({
   rows: canvas.width / 10,
   columns: canvas.height / 10,
   color: '#E3D4AB',
-  snake: new Snake(),
+  snake: new Snake(canvas.width/10, canvas.height/10),
   ctx: ctx,
 });
 
