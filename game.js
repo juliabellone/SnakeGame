@@ -33,12 +33,10 @@ Game.prototype._drawSnake = function () {
 };
 
 Game.prototype.start = function() {
-  // this._drawBoard();
-  // this._drawSnake();
-  this.snake.move();
   this._assignControlKeys();
   this.generateFood();
-  // this.intervalGame =
+  this.snake.move();
+  this.intervalGame = window.requestAnimationFrame(this._update.bind(this));
   window.requestAnimationFrame(this._update.bind(this));
 };
 
@@ -78,17 +76,17 @@ Game.prototype._update = function () {
     this.generateFood();
     this._drawfood();
   }
-  // if (this.snake.hasEatenItself) {
-  //   this.snake.stop();
-  //   this.stop();
-  //   alert('gameover');
-  // }
-  // this.intervalGame = window.requestAnimationFrame(this._update.bind(this));
+   if (this.snake.hasEatenItself()) {
+     this.snake.stop();
+     this.stop();
+     alert('gameover');
+  }
+  this.intervalGame = window.requestAnimationFrame(this._update.bind(this));
 };
 
-// Game.prototype.stop = function () {
-//   if (this.intervalGame){
-//     clearInterval(this.intervalGame);
-//     this.intervalGame = undefined;
-//   }
-// };
+Game.prototype.stop = function () {
+  if (this.intervalGame){
+    clearInterval(this.intervalGame);
+    this.intervalGame = undefined;
+  }
+};

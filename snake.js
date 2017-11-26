@@ -38,7 +38,7 @@ Snake.prototype.moveForward = function () {
   switch (this.direction) {
     case 'up':
       this.body.unshift({
-        row: ((head.row- 1) + this.maxRows) % this.maxRows, //prrevenir el valor negativo con "+ this.maxRows"
+        row: ((head.row- 1) + this.maxRows) % this.maxRows, //prevenir el valor negativo con "+ this.maxRows"
         column: head.column,
       });
       break;
@@ -84,13 +84,14 @@ Snake.prototype.collidesWith = function (position) {
   });
 };
 
-// Snake.prototype.hasEatenItself = function () {
-//   return this.body.some(function(element, index, array){
-//     return (element.row === array[0].row && element.column === array[0].column && index !=0);
-//   });
-// };
-// Snake.prototype.stop = function () {
-//   if (this.intervalId){
-//     clearInterval(this.intervalId);
-//   }
-// };
+Snake.prototype.hasEatenItself = function () {
+  return this.body.some(function(element, index, array){
+    return element.row === array[0].row && element.column === array[0].column && index !== 0;
+  });
+ };
+Snake.prototype.stop = function () {
+  if (this.intervalId){
+    clearInterval(this.intervalId);
+    this.intervalId = undefined;
+  }
+};

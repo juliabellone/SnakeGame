@@ -12,6 +12,9 @@ game = new Game({
   snake: new Snake(canvas.width/10, canvas.height/10),
   ctx: ctx,
 });
-
-game.start();
+// document.onkeydown = function (e) {
+//   if(e.keyCode == 32) {
+  game.start();
+//   }
+// };
 });
